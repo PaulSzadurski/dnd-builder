@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <form action="submit">
+    <input type="text" name="characterName" id="characterName" placeholder="Wilhelm">
+    <button onclick="character()">Click me!</button>
+  </form>
+
+  <div id="generated"></div>
+
+  <ul id="roster">
+    <!-- saved characters go here -->
+  </ul>
+  <script>
+    const character = () => {
+      event.preventDefault();
+
+      let generatedPC = document.getElementById('generated');
+      if (generatedPC.firstChild) {
+        generatedPC.removeChild(generatedPC.firstChild);
+      }
+
+      let name = document.getElementById('characterName').value;
+
+      let classes = ['Fighter', 'Wizard', 'Rogue', 'Monk', 'Barbarian', 'Warlock', 'Ranger', 'Sorcerer', 'Bard', 'Cleric', 'Paladin', 'Barbarian', 'Druid', 'Artificer'];
+      let races = ['Human', 'Elf', 'Orc', 'Halfling', 'Dwarf', 'Gnome', 'Dragonborn', 'Tiefling'];
+
+      let classname = classes[Math.floor(Math.random() * classes.length)];
+      let race = races[Math.floor(Math.random() * races.length)];
+      // console.log(race);
+
+      let stats = {
+        strength: Math.floor(Math.random() * (19 - 4) + 4),
+        dexterity: Math.floor(Math.random() * (19 - 4) + 4),
+        constitution: Math.floor(Math.random() * (19 - 4) + 4),
+        intelligence: Math.floor(Math.random() * (19 - 4) + 4),
+        wisdom: Math.floor(Math.random() * (19 - 4) + 4),
+        charisma: Math.floor(Math.random() * (19 - 4) + 4),
+      }
+
+      console.log (stats)
+
+      if (race === 'Human') {
+        for (const property in stats) {
+          stats[property] = stats[property] + 1;
+        }
+      }
+      else if (race === 'Elf') {
+        stats.dexterity = stats.dexterity + 1;
+        stats.intelligence = stats.intelligence + 2;
+      }
+      else if (race === 'Orc') {
+        stats.dexterity = stats.strength + 2;
+        stats.constitution = stats.constitution + 1;
+        stats.intelligence = stats.intelligence - 2;
+      }
+      else if (race === 'Halfling') {
+        stats.dexterity = stats.dexterity + 2;
+        stats.charisma = stats.charisma + 1;
+      }
+      else if (race === 'Dwarf') {
+        stats.constitution = stats.constitution + 2;
+        stats.strength = stats.strength + 2;
+      }
+      else if (race === 'Gnome') {
+        stats.dexterity = stats.dexterity + 1;
+        stats.intelligence = stats.intelligence + 2;
+      }
+      else if (race === 'Dragonborn') {
+        stats.strength = stats.strength + 2;
+        stats.charisma = stats.charisma + 1;
+      }
+      else if (race === 'Tiefling') {
+        stats.intelligence = stats.intelligence + 1;
+        stats.charisma = stats.charisma + 2;
+      }
+      
+
+      
+      // console.log(`Your name is ${name} and you are a ${race} ${classname}.\n
+      // Your ability scores are ${stats.strength} STR, ${stats.dexterity} DEX, ${stats.constitution} CON, ${stats.intelligence} INT, ${stats.wisdom} WIS, and ${stats.charisma} CHA.\n
+      // Happy Adventuring!`)
+      
+
+      let tag = document.createElement('p');
+
+      let button = document.createElement('button');
+
+      let buttonText = document.createTextNode('Save Character');
+
+
+
+      let pcText = document.createTextNode(`Your name is ${name} and you are a ${race} ${classname}.\n
+      Your ability scores are ${stats.strength} STR, ${stats.dexterity} DEX, ${stats.constitution} CON, ${stats.intelligence} INT, ${stats.wisdom} WIS, and ${stats.charisma} CHA.\n
+      Happy Adventuring!`)
+      
+      button.appendChild(buttonText);
+      tag.appendChild(pcText);
+      tag.appendChild(button)
+      tag.setAttribute('id', name);
+      generatedPC.appendChild(tag)
+
+      document.getElementById(name).addEventListener('click', function() {
+        let listItem = document.createElement('li');
+
+        let listItemText = document.createTextNode(`${name}; ${race}/${classname}; ${stats.strength} STR, ${stats.dexterity} DEX, ${stats.constitution} CON, ${stats.intelligence} INT, ${stats.wisdom} WIS, and ${stats.charisma} CHA.`);
+
+        listItem.appendChild(listItemText);
+        document.getElementById('roster').appendChild(listItem);
+      })
+    }
+
+
+  </script>
+</body>
+</html>
